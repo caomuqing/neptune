@@ -1,0 +1,14 @@
+<launch>
+
+	<arg name="quad" default="firefly1"/>
+	<arg name="goal_topic" default="goal"/>
+
+
+	<node ns="$(arg quad)" name="mtlp_node" pkg="neptune" type="mtlp_node" output="screen" clear_params="false" launch-prefix="gdb -ex run --args" > 
+    <rosparam file="$(find neptune)/param/neptune_mtlp_benchmark.yaml" command="load"/>
+        <!-- Subscriptions -->
+		
+	</node>
+
+
+</launch>

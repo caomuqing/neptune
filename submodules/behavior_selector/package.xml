@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>behavior_selector</name>
+  <version>0.0.0</version>
+  <description>GUI for selecting global flight mode</description>
+
+  <maintainer email="brett@todo.todo">brett</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
+  <depend>rqt_gui</depend>
+  <depend>rqt_gui_py</depend>
+
+   <build_depend>message_generation</build_depend>
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+     <rqt_gui plugin="${prefix}/plugin.xml"/>
+  </export>
+</package>

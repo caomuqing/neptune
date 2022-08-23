@@ -1,0 +1,127 @@
+auto_cmd: true # if true, will auto send commands within this program
+visual: true #publish visualization stuff
+color_type: "vel" #"vel" or "plain"
+num_of_agents: 1
+enable_entangle_check: true
+enable_single_benchmark: true
+
+dc: 0.05            #(seconds) Duration for the interpolation=Value of the timer pubGoal
+goal_radius: 0.20    #(m) Drone has arrived to the goal when distance_to_goal<GOAL_RADIUS
+drone_radius: 0.5  #(m) Used for collision checking
+rad_term_pos: 0.5 #(m) terminal position radius constraint for optimizer
+
+w_max: 5.0           # [rd/s] Maximum angular velocity. 0.4 for Hardware
+alpha_filter_dyaw: 0 # #[] Filter parameter for dyaw, \in [0,1]. Higher--> More aggressive filtering
+
+# x_min: -4.0  # [m] don't forget the .0
+# x_max: 4.0  # [m] don't forget the .0
+
+# y_min: -3.0  # [m] don't forget the .0
+# y_max: 3.0   # [m] don't forget the .0
+
+x_min: -11.0  # [m] don't forget the .0
+x_max: 15.0  # [m] don't forget the .0
+
+y_min: -15.0  # [m] don't forget the .0
+y_max: 15.0   # [m] don't forget the .0
+
+z_min: -1.0  # [m] points below this are considered ground
+z_max: 2.5   # [m] 
+
+#For multi-agent simulations
+# v_max: [2.5, 2.5, 2.5]   #[m/s]  
+# a_max: [30.0, 30.0, 9.6]   #[m/s2] 
+
+#For single-agent simulations
+v_max: [2.0, 2.0, 2.0]   #[m/s]  7.0
+a_max: [3.0, 3.0, 9.6]   #[m/s2] Note that if a_max.z() > 9.81, the drone may flip
+j_max: 5
+# v_max: [1.0, 1.0, 1.0]   #[m/s]  7.0
+# a_max: [2.0, 2.0, 2.0]   #[m/s2] Note that if a_max.z() > 9.81, the drone may flip
+# j_max: 10
+# Samples in velocity for the A* guess used in the nlopt optimization problem
+a_star_samp_x: 5
+a_star_fraction_voxel_size: 0.20 #\in [0,1] The higher, the bigger the voxel size in A* is(i.e. more prunning)
+
+tetherLength: 27.0
+# base_positions: [-6.0, -2.0,
+#                  -3.0, -2.0,
+#                  3.0, -2.0,
+#                  6.0, -2.0]
+
+circle_init_bases: false
+base_positions: [-10, 0.5,  #unity sim scene1
+                -5.0, -10,
+                10.0, -5.0,
+                5.0, 10.0,
+                -9.5, -5.0,
+                5.0, -9.5,
+                9.5, 5.0,
+                -5.0, 9.5]  
+# base_positions: [-3.87, -2.76, #unity sim IOT scene1
+#                 3.78, -2.77,
+#                 0.0, 2.8,
+#                 5.0, 10.0]  
+# base_positions: [4, -10,
+#                 10.0, 4,
+#                 -4.0, 10.0,
+#                 -10.0, -4]      
+num_sample_per_interval: 3 # for entanglement checking
+T_span: 0.5
+          
+factor_alpha: 1.5 #[-] DeltaT = factor_alpha*States_took_previous_replan
+
+num_pol: 8
+deg_pol: 3 #Only 3 is supported right now
+weight: 1000.0 #The .0 is needed 
+
+upper_bound_runtime_snlopt: 2.50 #[seconds] snlopt (init guess + solver) will never take longer than this amount of seconds
+lower_bound_runtime_snlopt: 0.62 #[seconds] snlopt (init guess + solver) will never take less than this amount of seconds
+runtime_opt: 0.08 # max runtime of optimizer for backend, has to be < lower_bound_runtime_snlopt
+use_linear_constraints: true #whether to use linear constraints for collision and non-entangling, with coeffs from initial solution
+
+a_star_bias: 1.0 #Bias (cost=g+bias*h) in the A* search 
+
+basis: "MINVO"  #MINVO OR B_SPLINE or BEZIER.  This is the basis used for collision checking
+
+res_plot_traj: 15.0  #Higher --> More resolution when plotting the trajectory 
+
+# num_of_static_obst: 5
+# num_of_vertices_each_obst: [4, 4, 4, 4, 4]
+# vertice_obst_x: [-0.25, -0.25, 0.25, 0.25, 
+#                   4.5, 4.0, 4.0,  4.5,  
+#                   -4.5, -4.0, -4.0,  -4.5,
+#                   4.5, 4.0, 4.0,  4.5,
+#                   -4.5, -4.0, -4.0,  -4.5]
+
+# vertice_obst_y: [-0.25,  0.25, 0.25, -0.25, 
+#                   4.0, 4.0, 3.5, 3.5, 
+#                   -4.0, -4.0, -3.5, -3.5, 
+#                   -4.0, -4.0, -3.5, -3.5, 
+#                   4.0, 4.0, 3.5, 3.5]                  
+random_obst: true  #if true, obst will be randomly placed based on num_of_static_obst. 
+                  #if true, vertice_obst_x and vertice_obst_y will be disregarded
+num_of_static_obst: 15
+num_of_vertices_each_obst: [4, 4, 4, 4, 4, 4, 4, 4, 4]
+vertice_obst_x: [-0.25, -0.25, 0.25, 0.25, 
+                  6.5, 6.0, 6.0,  6.5,  
+                  -6.5, -6.0, -6.0,  -6.5,
+                  6.5, 6.0, 6.0,  6.5,
+                  -6.5, -6.0, -6.0,  -6.5,
+                  5.25, 5.25, 5.75, 5.75,
+                  -5.25, -5.25, -5.75, -5.75,
+                  -0.25,  0.25, 0.25, -0.25,
+                  -0.25,  0.25, 0.25, -0.25]
+
+vertice_obst_y: [-0.25,  0.25, 0.25, -0.25, 
+                  6.0, 6.0, 5.5, 5.5, 
+                  -6.0, -6.0, -5.5, -5.5, 
+                  -6.0, -6.0, -5.5, -5.5, 
+                  6.0, 6.0, 5.5, 5.5,
+                  -0.25,  0.25, 0.25, -0.25,
+                  -0.25,  0.25, 0.25, -0.25,
+                  4.75, 4.75, 5.25, 5.25,
+                  -4.75, -4.75, -5.25, -5.25]       
+
+safe_factor: 0.6
+use_not_reaching_soln: true

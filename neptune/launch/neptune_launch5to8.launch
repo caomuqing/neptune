@@ -1,0 +1,67 @@
+<launch>
+
+	<arg name="goal_topic" default="goal"/>
+
+
+	<node ns="firefly5" name="neptune" pkg="neptune" type="neptune_test_node" output="screen" clear_params="false" > 
+    <rosparam file="$(find neptune)/param/neptune.yaml" command="load"/>
+        <!-- Subscriptions -->
+		<remap from="~state" to="state"/>
+		<remap from="~term_goal" to="term_goal" />
+
+		<!-- Publications -->
+		<remap from="~traj" to="traj"/>
+		<remap from="~goal" to="$(arg goal_topic)" />
+		<remap from="~setpoint" to="setpoint" />
+		<remap from="~command/trajectory" to="command/trajectory" />
+		<remap from="~ground_truth/odometry" to="unity/odom" />
+		
+	</node>
+
+
+	<node ns="firefly6" name="neptune" pkg="neptune" type="neptune_test_node" output="screen" clear_params="false" > 
+    <rosparam file="$(find neptune)/param/neptune.yaml" command="load"/>
+        <!-- Subscriptions -->
+		<remap from="~state" to="state"/>
+		<remap from="~term_goal" to="term_goal" />
+
+		<!-- Publications -->
+		<remap from="~traj" to="traj"/>
+		<remap from="~goal" to="$(arg goal_topic)" />
+		<remap from="~setpoint" to="setpoint" />
+		<remap from="~command/trajectory" to="command/trajectory" />
+		<remap from="~ground_truth/odometry" to="unity/odom" />
+		
+	</node>
+
+	<node ns="firefly7" name="neptune" pkg="neptune" type="neptune_test_node" output="screen" clear_params="false" > 
+    <rosparam file="$(find neptune)/param/neptune.yaml" command="load"/>
+        <!-- Subscriptions -->
+		<remap from="~state" to="state"/>
+		<remap from="~term_goal" to="term_goal" />
+
+		<!-- Publications -->
+		<remap from="~traj" to="traj"/>
+		<remap from="~goal" to="$(arg goal_topic)" />
+		<remap from="~setpoint" to="setpoint" />
+		<remap from="~command/trajectory" to="command/trajectory" />
+		<remap from="~ground_truth/odometry" to="unity/odom" />
+		
+	</node>
+
+	<node ns="firefly8" name="neptune" pkg="neptune" type="neptune_test_node" output="screen" clear_params="false" > 
+    <rosparam file="$(find neptune)/param/neptune.yaml" command="load"/>
+        <!-- Subscriptions -->
+		<remap from="~state" to="state"/>
+		<remap from="~term_goal" to="term_goal" />
+
+		<!-- Publications -->
+		<remap from="~traj" to="traj"/>
+		<remap from="~goal" to="$(arg goal_topic)" />
+		<remap from="~setpoint" to="setpoint" />
+		<remap from="~command/trajectory" to="command/trajectory" />
+		<remap from="~ground_truth/odometry" to="unity/odom" />
+		
+	</node>
+
+</launch>

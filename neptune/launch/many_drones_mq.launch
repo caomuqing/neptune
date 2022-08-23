@@ -1,0 +1,7 @@
+<launch>
+
+	<arg name="action" default=""/>
+
+	<node name="launch_many_drones_mq" pkg="neptune" type="launch_many_drones_mq.py" output="screen" clear_params="true" args="$(arg action)" /> 
+
+</launch>

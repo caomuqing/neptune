@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SystemStartWidget</class>
+ <widget class="QWidget" name="SystemStartWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+
+  <layout class="QVBoxLayout" name="verticalLayout">
+
+
+    <item>
+      <widget class="QPushButton" name="start_push_button">
+       <property name="font">
+        <font>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+         <color>blue</color>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>Start the Mission</string>
+       </property>
+       <property name="text">
+        <string>START</string>
+       </property>
+       <property name="styleSheet">
+       <string notr="true">background-color: rgb(0, 255, 0);
+       color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>80</height>
+     </size>
+    </property>
+      </widget>
+     </item>
+
+     <item>
+      <widget class="QPushButton" name="end_push_button">
+       <property name="font">
+        <font>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+         <color>blue</color>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>End the Mission</string>
+       </property>
+       <property name="text">
+        <string>END</string>
+       </property>
+       <property name="styleSheet">
+       <string notr="true">background-color: rgb(0, 0, 255);
+       color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>80</height>
+       </size>
+      </property>
+      </widget>
+     </item>
+
+     <item>
+      <widget class="QPushButton" name="stop_push_button">
+       <property name="font">
+        <font>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+         <color>blue</color>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>Stop the Mission</string>
+       </property>
+       <property name="text">
+        <string>E-STOP</string>
+       </property>
+       <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 0, 0);
+       color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>80</height>
+     </size>
+    </property>
+      </widget>
+     </item>
+
+ </layout>
+  </widget>
+ <resources/>
+ <connections/>
+</ui>

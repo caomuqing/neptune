@@ -1,0 +1,18 @@
+<library path="src">
+  <class name="MissionModePlugin" type="rqt_pkg.button_module.MissionModePlugin" base_class_type="rqt_gui_py::Plugin">
+    <description>
+      An example Python GUI plugin to create a great user interface.
+    </description>
+    <qtgui>
+      <group>
+        <label>Robot Tools</label>
+        <icon type="theme">folder</icon>
+        <statustip>Plugins related to robot tools.</statustip>
+      </group>
+
+      <label>Mission Mode</label>
+      <icon type="theme">input-gaming</icon>
+      <statustip>Great user interface to provide real value.</statustip>
+    </qtgui>
+  </class>
+</library>

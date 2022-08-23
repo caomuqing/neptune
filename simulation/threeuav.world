@@ -1,0 +1,2221 @@
+<sdf version='1.6'>
+  <world name='default'>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <contact>
+              <collide_bitmask>65535</collide_bitmask>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose frame=''>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+    <plugin name='ros_interface_plugin' filename='librotors_gazebo_ros_interface_plugin.so'/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>47.3667</latitude_deg>
+      <longitude_deg>8.55</longitude_deg>
+      <elevation>500</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <physics name='default_physics' default='0' type='ode'>
+      <ode>
+        <solver>
+          <type>quick</type>
+          <iters>1000</iters>
+          <sor>1.3</sor>
+          <use_dynamic_moi_rescaling>0</use_dynamic_moi_rescaling>
+        </solver>
+        <constraints>
+          <cfm>0</cfm>
+          <erp>0.2</erp>
+          <contact_max_correcting_vel>100</contact_max_correcting_vel>
+          <contact_surface_layer>0.001</contact_surface_layer>
+        </constraints>
+      </ode>
+      <max_step_size>0.01</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>100</real_time_update_rate>
+    </physics>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <audio>
+      <device>default</device>
+    </audio>
+    <wind/>
+    <model name='hummingbird1'>
+      <link name='hummingbird1/base_link'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.68</mass>
+          <inertia>
+            <ixx>0.007</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.007</iyy>
+            <iyz>0</iyz>
+            <izz>0.012</izz>
+          </inertia>
+        </inertial>
+        <collision name='hummingbird1/base_link_inertia_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.1 0.1 0.12</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='hummingbird1/base_link_inertia_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/iot/catkin_ws_neptune/src/rotors_simulator/rotors_description/meshes/hummingbird.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <link name='hummingbird1/imu_link'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.015</mass>
+          <inertia>
+            <ixx>1e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1e-05</iyy>
+            <iyz>0</iyz>
+            <izz>1e-05</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird1/imu_joint' type='revolute'>
+        <child>hummingbird1/imu_link</child>
+        <parent>hummingbird1/base_link</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>0</upper>
+            <effort>0</effort>
+            <velocity>0</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird1/imugt_link'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>1e-05</mass>
+          <inertia>
+            <ixx>1e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1e-05</iyy>
+            <iyz>0</iyz>
+            <izz>1e-05</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird1/imugt_joint' type='revolute'>
+        <child>hummingbird1/imugt_link</child>
+        <parent>hummingbird1/base_link</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>0</upper>
+            <effort>0</effort>
+            <velocity>0</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird1/odometry_sensor1_link'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>1e-05</mass>
+          <inertia>
+            <ixx>1e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1e-05</iyy>
+            <iyz>0</iyz>
+            <izz>1e-05</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird1/odometry_sensor1_joint' type='revolute'>
+        <child>hummingbird1/odometry_sensor1_link</child>
+        <parent>hummingbird1/base_link</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>0</upper>
+            <effort>0</effort>
+            <velocity>0</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird1/odometry_sensorgt_link'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>1e-05</mass>
+          <inertia>
+            <ixx>1e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1e-05</iyy>
+            <iyz>0</iyz>
+            <izz>1e-05</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird1/odometry_sensorgt_joint' type='revolute'>
+        <child>hummingbird1/odometry_sensorgt_link</child>
+        <parent>hummingbird1/base_link</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>0</upper>
+            <effort>0</effort>
+            <velocity>0</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird1/rotor_0'>
+        <pose frame=''>0.17 0 0.01 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.009</mass>
+          <inertia>
+            <ixx>1.755e-06</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>7.50675e-05</iyy>
+            <iyz>0</iyz>
+            <izz>7.66875e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='hummingbird1/rotor_0_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.005</length>
+              <radius>0.1</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='hummingbird1/rotor_0_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/home/iot/catkin_ws_neptune/src/rotors_simulator/rotors_description/meshes/propeller_cw.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Red</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird1/rotor_0_joint' type='revolute'>
+        <child>hummingbird1/rotor_0</child>
+        <parent>hummingbird1/base_link</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird1/rotor_1'>
+        <pose frame=''>0 0.17 0.01 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.009</mass>
+          <inertia>
+            <ixx>1.755e-06</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>7.50675e-05</iyy>
+            <iyz>0</iyz>
+            <izz>7.66875e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='hummingbird1/rotor_1_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.005</length>
+              <radius>0.1</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='hummingbird1/rotor_1_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/home/iot/catkin_ws_neptune/src/rotors_simulator/rotors_description/meshes/propeller_ccw.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Blue</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird1/rotor_1_joint' type='revolute'>
+        <child>hummingbird1/rotor_1</child>
+        <parent>hummingbird1/base_link</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird1/rotor_2'>
+        <pose frame=''>-0.17 0 0.01 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.009</mass>
+          <inertia>
+            <ixx>1.755e-06</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>7.50675e-05</iyy>
+            <iyz>0</iyz>
+            <izz>7.66875e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='hummingbird1/rotor_2_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.005</length>
+              <radius>0.1</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='hummingbird1/rotor_2_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/home/iot/catkin_ws_neptune/src/rotors_simulator/rotors_description/meshes/propeller_cw.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Blue</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird1/rotor_2_joint' type='revolute'>
+        <child>hummingbird1/rotor_2</child>
+        <parent>hummingbird1/base_link</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird1/rotor_3'>
+        <pose frame=''>0 -0.17 0.01 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.009</mass>
+          <inertia>
+            <ixx>1.755e-06</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>7.50675e-05</iyy>
+            <iyz>0</iyz>
+            <izz>7.66875e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='hummingbird1/rotor_3_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.005</length>
+              <radius>0.1</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='hummingbird1/rotor_3_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/home/iot/catkin_ws_neptune/src/rotors_simulator/rotors_description/meshes/propeller_ccw.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Blue</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird1/rotor_3_joint' type='revolute'>
+        <child>hummingbird1/rotor_3</child>
+        <parent>hummingbird1/base_link</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <plugin name='multirotor_base_plugin' filename='librotors_gazebo_multirotor_base_plugin.so'>
+        <robotNamespace>hummingbird1</robotNamespace>
+        <linkName>hummingbird1/base_link</linkName>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      </plugin>
+      <plugin name='hummingbird1_front_motor_model' filename='librotors_gazebo_motor_model.so'>
+        <robotNamespace>hummingbird1</robotNamespace>
+        <jointName>hummingbird1/rotor_0_joint</jointName>
+        <linkName>hummingbird1/rotor_0</linkName>
+        <turningDirection>cw</turningDirection>
+        <timeConstantUp>0.0125</timeConstantUp>
+        <timeConstantDown>0.025</timeConstantDown>
+        <maxRotVelocity>838</maxRotVelocity>
+        <motorConstant>8.54858e-06</motorConstant>
+        <momentConstant>0.016</momentConstant>
+        <commandSubTopic>gazebo/command/motor_speed</commandSubTopic>
+        <motorNumber>0</motorNumber>
+        <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+        <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+        <motorSpeedPubTopic>motor_speed/0</motorSpeedPubTopic>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      </plugin>
+      <plugin name='hummingbird1_left_motor_model' filename='librotors_gazebo_motor_model.so'>
+        <robotNamespace>hummingbird1</robotNamespace>
+        <jointName>hummingbird1/rotor_1_joint</jointName>
+        <linkName>hummingbird1/rotor_1</linkName>
+        <turningDirection>ccw</turningDirection>
+        <timeConstantUp>0.0125</timeConstantUp>
+        <timeConstantDown>0.025</timeConstantDown>
+        <maxRotVelocity>838</maxRotVelocity>
+        <motorConstant>8.54858e-06</motorConstant>
+        <momentConstant>0.016</momentConstant>
+        <commandSubTopic>gazebo/command/motor_speed</commandSubTopic>
+        <motorNumber>1</motorNumber>
+        <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+        <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+        <motorSpeedPubTopic>motor_speed/1</motorSpeedPubTopic>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      </plugin>
+      <plugin name='hummingbird1_back_motor_model' filename='librotors_gazebo_motor_model.so'>
+        <robotNamespace>hummingbird1</robotNamespace>
+        <jointName>hummingbird1/rotor_2_joint</jointName>
+        <linkName>hummingbird1/rotor_2</linkName>
+        <turningDirection>cw</turningDirection>
+        <timeConstantUp>0.0125</timeConstantUp>
+        <timeConstantDown>0.025</timeConstantDown>
+        <maxRotVelocity>838</maxRotVelocity>
+        <motorConstant>8.54858e-06</motorConstant>
+        <momentConstant>0.016</momentConstant>
+        <commandSubTopic>gazebo/command/motor_speed</commandSubTopic>
+        <motorNumber>2</motorNumber>
+        <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+        <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+        <motorSpeedPubTopic>motor_speed/2</motorSpeedPubTopic>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      </plugin>
+      <plugin name='hummingbird1_right_motor_model' filename='librotors_gazebo_motor_model.so'>
+        <robotNamespace>hummingbird1</robotNamespace>
+        <jointName>hummingbird1/rotor_3_joint</jointName>
+        <linkName>hummingbird1/rotor_3</linkName>
+        <turningDirection>ccw</turningDirection>
+        <timeConstantUp>0.0125</timeConstantUp>
+        <timeConstantDown>0.025</timeConstantDown>
+        <maxRotVelocity>838</maxRotVelocity>
+        <motorConstant>8.54858e-06</motorConstant>
+        <momentConstant>0.016</momentConstant>
+        <commandSubTopic>gazebo/command/motor_speed</commandSubTopic>
+        <motorNumber>3</motorNumber>
+        <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+        <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+        <motorSpeedPubTopic>motor_speed/3</motorSpeedPubTopic>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      </plugin>
+      <plugin name='controller_interface' filename='librotors_gazebo_controller_interface.so'>
+        <robotNamespace>hummingbird1</robotNamespace>
+        <commandAttitudeThrustSubTopic>command/attitude</commandAttitudeThrustSubTopic>
+        <commandRateThrustSubTopic>command/rate</commandRateThrustSubTopic>
+        <commandMotorSpeedSubTopic>command/motor_speed</commandMotorSpeedSubTopic>
+        <imuSubTopic>imu</imuSubTopic>
+        <motorSpeedCommandPubTopic>gazebo/command/motor_speed</motorSpeedCommandPubTopic>
+      </plugin>
+      <plugin name='rotors_gazebo_imu_plugin' filename='librotors_gazebo_imu_plugin.so'>
+        <robotNamespace>hummingbird1</robotNamespace>
+        <linkName>hummingbird1/imu_link</linkName>
+        <imuTopic>imu</imuTopic>
+        <gyroscopeNoiseDensity>0.0003394</gyroscopeNoiseDensity>
+        <gyroscopeRandomWalk>3.8785e-05</gyroscopeRandomWalk>
+        <gyroscopeBiasCorrelationTime>1000.0</gyroscopeBiasCorrelationTime>
+        <gyroscopeTurnOnBiasSigma>0.0087</gyroscopeTurnOnBiasSigma>
+        <accelerometerNoiseDensity>0.004</accelerometerNoiseDensity>
+        <accelerometerRandomWalk>0.006</accelerometerRandomWalk>
+        <accelerometerBiasCorrelationTime>300.0</accelerometerBiasCorrelationTime>
+        <accelerometerTurnOnBiasSigma>0.196</accelerometerTurnOnBiasSigma>
+      </plugin>
+      <plugin name='rotors_gazebo_imugt_plugin' filename='librotors_gazebo_imu_plugin.so'>
+        <robotNamespace>hummingbird1</robotNamespace>
+        <linkName>hummingbird1/imugt_link</linkName>
+        <imuTopic>ground_truth/imu</imuTopic>
+        <gyroscopeNoiseDensity>0.0</gyroscopeNoiseDensity>
+        <gyroscopeRandomWalk>0.0</gyroscopeRandomWalk>
+        <gyroscopeBiasCorrelationTime>1000.0</gyroscopeBiasCorrelationTime>
+        <gyroscopeTurnOnBiasSigma>0.0</gyroscopeTurnOnBiasSigma>
+        <accelerometerNoiseDensity>0.0</accelerometerNoiseDensity>
+        <accelerometerRandomWalk>0.0</accelerometerRandomWalk>
+        <accelerometerBiasCorrelationTime>300.0</accelerometerBiasCorrelationTime>
+        <accelerometerTurnOnBiasSigma>0.0</accelerometerTurnOnBiasSigma>
+      </plugin>
+      <plugin name='odometry_sensorgt' filename='librotors_gazebo_odometry_plugin.so'>
+        <linkName>hummingbird1/odometry_sensorgt_link</linkName>
+        <robotNamespace>hummingbird1</robotNamespace>
+        <poseTopic>ground_truth/pose</poseTopic>
+        <poseWithCovarianceTopic>ground_truth/pose_with_covariance</poseWithCovarianceTopic>
+        <positionTopic>ground_truth/position</positionTopic>
+        <transformTopic>ground_truth/transform</transformTopic>
+        <odometryTopic>ground_truth/odometry</odometryTopic>
+        <parentFrameId>world</parentFrameId>
+        <childFrameId>hummingbird1/base_link</childFrameId>
+        <measurementDivisor>1</measurementDivisor>
+        <measurementDelay>0</measurementDelay>
+        <unknownDelay>0.0</unknownDelay>
+        <noiseNormalPosition>0 0 0</noiseNormalPosition>
+        <noiseNormalQuaternion>0 0 0</noiseNormalQuaternion>
+        <noiseNormalLinearVelocity>0 0 0</noiseNormalLinearVelocity>
+        <noiseNormalAngularVelocity>0 0 0</noiseNormalAngularVelocity>
+        <noiseUniformPosition>0 0 0</noiseUniformPosition>
+        <noiseUniformQuaternion>0 0 0</noiseUniformQuaternion>
+        <noiseUniformLinearVelocity>0 0 0</noiseUniformLinearVelocity>
+        <noiseUniformAngularVelocity>0 0 0</noiseUniformAngularVelocity>
+      </plugin>
+      <static>0</static>
+      <plugin name='odometry_sensor1' filename='librotors_gazebo_odometry_plugin.so'>
+        <linkName>hummingbird1/odometry_sensor1_link</linkName>
+        <robotNamespace>hummingbird1</robotNamespace>
+        <poseTopic>odometry_sensor1/pose</poseTopic>
+        <poseWithCovarianceTopic>odometry_sensor1/pose_with_covariance</poseWithCovarianceTopic>
+        <positionTopic>odometry_sensor1/position</positionTopic>
+        <transformTopic>odometry_sensor1/transform</transformTopic>
+        <odometryTopic>odometry_sensor1/odometry</odometryTopic>
+        <parentFrameId>world</parentFrameId>
+        <childFrameId>hummingbird1/odometry_sensor1</childFrameId>
+        <measurementDivisor>1</measurementDivisor>
+        <measurementDelay>0</measurementDelay>
+        <unknownDelay>0.0</unknownDelay>
+        <noiseNormalPosition>0 0 0</noiseNormalPosition>
+        <noiseNormalQuaternion>0 0 0</noiseNormalQuaternion>
+        <noiseNormalLinearVelocity>0 0 0</noiseNormalLinearVelocity>
+        <noiseNormalAngularVelocity>0 0 0</noiseNormalAngularVelocity>
+        <noiseUniformPosition>0 0 0</noiseUniformPosition>
+        <noiseUniformQuaternion>0 0 0</noiseUniformQuaternion>
+        <noiseUniformLinearVelocity>0 0 0</noiseUniformLinearVelocity>
+        <noiseUniformAngularVelocity>0 0 0</noiseUniformAngularVelocity>
+      </plugin>
+      <pose frame=''>0 0 0.1 0 -0 0</pose>
+    </model>
+    <model name='hummingbird2'>
+      <link name='hummingbird2/base_link'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.68</mass>
+          <inertia>
+            <ixx>0.007</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.007</iyy>
+            <iyz>0</iyz>
+            <izz>0.012</izz>
+          </inertia>
+        </inertial>
+        <collision name='hummingbird2/base_link_inertia_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.1 0.1 0.12</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='hummingbird2/base_link_inertia_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/iot/catkin_ws_neptune/src/rotors_simulator/rotors_description/meshes/hummingbird.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <link name='hummingbird2/imu_link'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.015</mass>
+          <inertia>
+            <ixx>1e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1e-05</iyy>
+            <iyz>0</iyz>
+            <izz>1e-05</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird2/imu_joint' type='revolute'>
+        <child>hummingbird2/imu_link</child>
+        <parent>hummingbird2/base_link</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>0</upper>
+            <effort>0</effort>
+            <velocity>0</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird2/imugt_link'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>1e-05</mass>
+          <inertia>
+            <ixx>1e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1e-05</iyy>
+            <iyz>0</iyz>
+            <izz>1e-05</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird2/imugt_joint' type='revolute'>
+        <child>hummingbird2/imugt_link</child>
+        <parent>hummingbird2/base_link</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>0</upper>
+            <effort>0</effort>
+            <velocity>0</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird2/odometry_sensor1_link'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>1e-05</mass>
+          <inertia>
+            <ixx>1e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1e-05</iyy>
+            <iyz>0</iyz>
+            <izz>1e-05</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird2/odometry_sensor1_joint' type='revolute'>
+        <child>hummingbird2/odometry_sensor1_link</child>
+        <parent>hummingbird2/base_link</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>0</upper>
+            <effort>0</effort>
+            <velocity>0</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird2/odometry_sensorgt_link'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>1e-05</mass>
+          <inertia>
+            <ixx>1e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1e-05</iyy>
+            <iyz>0</iyz>
+            <izz>1e-05</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird2/odometry_sensorgt_joint' type='revolute'>
+        <child>hummingbird2/odometry_sensorgt_link</child>
+        <parent>hummingbird2/base_link</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>0</upper>
+            <effort>0</effort>
+            <velocity>0</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird2/rotor_0'>
+        <pose frame=''>0.17 0 0.01 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.009</mass>
+          <inertia>
+            <ixx>1.755e-06</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>7.50675e-05</iyy>
+            <iyz>0</iyz>
+            <izz>7.66875e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='hummingbird2/rotor_0_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.005</length>
+              <radius>0.1</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='hummingbird2/rotor_0_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/home/iot/catkin_ws_neptune/src/rotors_simulator/rotors_description/meshes/propeller_cw.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Red</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird2/rotor_0_joint' type='revolute'>
+        <child>hummingbird2/rotor_0</child>
+        <parent>hummingbird2/base_link</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird2/rotor_1'>
+        <pose frame=''>0 0.17 0.01 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.009</mass>
+          <inertia>
+            <ixx>1.755e-06</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>7.50675e-05</iyy>
+            <iyz>0</iyz>
+            <izz>7.66875e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='hummingbird2/rotor_1_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.005</length>
+              <radius>0.1</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='hummingbird2/rotor_1_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/home/iot/catkin_ws_neptune/src/rotors_simulator/rotors_description/meshes/propeller_ccw.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Blue</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird2/rotor_1_joint' type='revolute'>
+        <child>hummingbird2/rotor_1</child>
+        <parent>hummingbird2/base_link</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird2/rotor_2'>
+        <pose frame=''>-0.17 0 0.01 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.009</mass>
+          <inertia>
+            <ixx>1.755e-06</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>7.50675e-05</iyy>
+            <iyz>0</iyz>
+            <izz>7.66875e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='hummingbird2/rotor_2_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.005</length>
+              <radius>0.1</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='hummingbird2/rotor_2_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/home/iot/catkin_ws_neptune/src/rotors_simulator/rotors_description/meshes/propeller_cw.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Blue</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird2/rotor_2_joint' type='revolute'>
+        <child>hummingbird2/rotor_2</child>
+        <parent>hummingbird2/base_link</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird2/rotor_3'>
+        <pose frame=''>0 -0.17 0.01 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.009</mass>
+          <inertia>
+            <ixx>1.755e-06</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>7.50675e-05</iyy>
+            <iyz>0</iyz>
+            <izz>7.66875e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='hummingbird2/rotor_3_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.005</length>
+              <radius>0.1</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='hummingbird2/rotor_3_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/home/iot/catkin_ws_neptune/src/rotors_simulator/rotors_description/meshes/propeller_ccw.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Blue</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird2/rotor_3_joint' type='revolute'>
+        <child>hummingbird2/rotor_3</child>
+        <parent>hummingbird2/base_link</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <plugin name='multirotor_base_plugin' filename='librotors_gazebo_multirotor_base_plugin.so'>
+        <robotNamespace>hummingbird2</robotNamespace>
+        <linkName>hummingbird2/base_link</linkName>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      </plugin>
+      <plugin name='hummingbird2_front_motor_model' filename='librotors_gazebo_motor_model.so'>
+        <robotNamespace>hummingbird2</robotNamespace>
+        <jointName>hummingbird2/rotor_0_joint</jointName>
+        <linkName>hummingbird2/rotor_0</linkName>
+        <turningDirection>cw</turningDirection>
+        <timeConstantUp>0.0125</timeConstantUp>
+        <timeConstantDown>0.025</timeConstantDown>
+        <maxRotVelocity>838</maxRotVelocity>
+        <motorConstant>8.54858e-06</motorConstant>
+        <momentConstant>0.016</momentConstant>
+        <commandSubTopic>gazebo/command/motor_speed</commandSubTopic>
+        <motorNumber>0</motorNumber>
+        <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+        <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+        <motorSpeedPubTopic>motor_speed/0</motorSpeedPubTopic>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      </plugin>
+      <plugin name='hummingbird2_left_motor_model' filename='librotors_gazebo_motor_model.so'>
+        <robotNamespace>hummingbird2</robotNamespace>
+        <jointName>hummingbird2/rotor_1_joint</jointName>
+        <linkName>hummingbird2/rotor_1</linkName>
+        <turningDirection>ccw</turningDirection>
+        <timeConstantUp>0.0125</timeConstantUp>
+        <timeConstantDown>0.025</timeConstantDown>
+        <maxRotVelocity>838</maxRotVelocity>
+        <motorConstant>8.54858e-06</motorConstant>
+        <momentConstant>0.016</momentConstant>
+        <commandSubTopic>gazebo/command/motor_speed</commandSubTopic>
+        <motorNumber>1</motorNumber>
+        <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+        <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+        <motorSpeedPubTopic>motor_speed/1</motorSpeedPubTopic>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      </plugin>
+      <plugin name='hummingbird2_back_motor_model' filename='librotors_gazebo_motor_model.so'>
+        <robotNamespace>hummingbird2</robotNamespace>
+        <jointName>hummingbird2/rotor_2_joint</jointName>
+        <linkName>hummingbird2/rotor_2</linkName>
+        <turningDirection>cw</turningDirection>
+        <timeConstantUp>0.0125</timeConstantUp>
+        <timeConstantDown>0.025</timeConstantDown>
+        <maxRotVelocity>838</maxRotVelocity>
+        <motorConstant>8.54858e-06</motorConstant>
+        <momentConstant>0.016</momentConstant>
+        <commandSubTopic>gazebo/command/motor_speed</commandSubTopic>
+        <motorNumber>2</motorNumber>
+        <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+        <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+        <motorSpeedPubTopic>motor_speed/2</motorSpeedPubTopic>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      </plugin>
+      <plugin name='hummingbird2_right_motor_model' filename='librotors_gazebo_motor_model.so'>
+        <robotNamespace>hummingbird2</robotNamespace>
+        <jointName>hummingbird2/rotor_3_joint</jointName>
+        <linkName>hummingbird2/rotor_3</linkName>
+        <turningDirection>ccw</turningDirection>
+        <timeConstantUp>0.0125</timeConstantUp>
+        <timeConstantDown>0.025</timeConstantDown>
+        <maxRotVelocity>838</maxRotVelocity>
+        <motorConstant>8.54858e-06</motorConstant>
+        <momentConstant>0.016</momentConstant>
+        <commandSubTopic>gazebo/command/motor_speed</commandSubTopic>
+        <motorNumber>3</motorNumber>
+        <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+        <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+        <motorSpeedPubTopic>motor_speed/3</motorSpeedPubTopic>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      </plugin>
+      <plugin name='controller_interface' filename='librotors_gazebo_controller_interface.so'>
+        <robotNamespace>hummingbird2</robotNamespace>
+        <commandAttitudeThrustSubTopic>command/attitude</commandAttitudeThrustSubTopic>
+        <commandRateThrustSubTopic>command/rate</commandRateThrustSubTopic>
+        <commandMotorSpeedSubTopic>command/motor_speed</commandMotorSpeedSubTopic>
+        <imuSubTopic>imu</imuSubTopic>
+        <motorSpeedCommandPubTopic>gazebo/command/motor_speed</motorSpeedCommandPubTopic>
+      </plugin>
+      <plugin name='rotors_gazebo_imu_plugin' filename='librotors_gazebo_imu_plugin.so'>
+        <robotNamespace>hummingbird2</robotNamespace>
+        <linkName>hummingbird2/imu_link</linkName>
+        <imuTopic>imu</imuTopic>
+        <gyroscopeNoiseDensity>0.0003394</gyroscopeNoiseDensity>
+        <gyroscopeRandomWalk>3.8785e-05</gyroscopeRandomWalk>
+        <gyroscopeBiasCorrelationTime>1000.0</gyroscopeBiasCorrelationTime>
+        <gyroscopeTurnOnBiasSigma>0.0087</gyroscopeTurnOnBiasSigma>
+        <accelerometerNoiseDensity>0.004</accelerometerNoiseDensity>
+        <accelerometerRandomWalk>0.006</accelerometerRandomWalk>
+        <accelerometerBiasCorrelationTime>300.0</accelerometerBiasCorrelationTime>
+        <accelerometerTurnOnBiasSigma>0.196</accelerometerTurnOnBiasSigma>
+      </plugin>
+      <plugin name='rotors_gazebo_imugt_plugin' filename='librotors_gazebo_imu_plugin.so'>
+        <robotNamespace>hummingbird2</robotNamespace>
+        <linkName>hummingbird2/imugt_link</linkName>
+        <imuTopic>ground_truth/imu</imuTopic>
+        <gyroscopeNoiseDensity>0.0</gyroscopeNoiseDensity>
+        <gyroscopeRandomWalk>0.0</gyroscopeRandomWalk>
+        <gyroscopeBiasCorrelationTime>1000.0</gyroscopeBiasCorrelationTime>
+        <gyroscopeTurnOnBiasSigma>0.0</gyroscopeTurnOnBiasSigma>
+        <accelerometerNoiseDensity>0.0</accelerometerNoiseDensity>
+        <accelerometerRandomWalk>0.0</accelerometerRandomWalk>
+        <accelerometerBiasCorrelationTime>300.0</accelerometerBiasCorrelationTime>
+        <accelerometerTurnOnBiasSigma>0.0</accelerometerTurnOnBiasSigma>
+      </plugin>
+      <plugin name='odometry_sensorgt' filename='librotors_gazebo_odometry_plugin.so'>
+        <linkName>hummingbird2/odometry_sensorgt_link</linkName>
+        <robotNamespace>hummingbird2</robotNamespace>
+        <poseTopic>ground_truth/pose</poseTopic>
+        <poseWithCovarianceTopic>ground_truth/pose_with_covariance</poseWithCovarianceTopic>
+        <positionTopic>ground_truth/position</positionTopic>
+        <transformTopic>ground_truth/transform</transformTopic>
+        <odometryTopic>ground_truth/odometry</odometryTopic>
+        <parentFrameId>world</parentFrameId>
+        <childFrameId>hummingbird2/base_link</childFrameId>
+        <measurementDivisor>1</measurementDivisor>
+        <measurementDelay>0</measurementDelay>
+        <unknownDelay>0.0</unknownDelay>
+        <noiseNormalPosition>0 0 0</noiseNormalPosition>
+        <noiseNormalQuaternion>0 0 0</noiseNormalQuaternion>
+        <noiseNormalLinearVelocity>0 0 0</noiseNormalLinearVelocity>
+        <noiseNormalAngularVelocity>0 0 0</noiseNormalAngularVelocity>
+        <noiseUniformPosition>0 0 0</noiseUniformPosition>
+        <noiseUniformQuaternion>0 0 0</noiseUniformQuaternion>
+        <noiseUniformLinearVelocity>0 0 0</noiseUniformLinearVelocity>
+        <noiseUniformAngularVelocity>0 0 0</noiseUniformAngularVelocity>
+      </plugin>
+      <static>0</static>
+      <plugin name='odometry_sensor1' filename='librotors_gazebo_odometry_plugin.so'>
+        <linkName>hummingbird2/odometry_sensor1_link</linkName>
+        <robotNamespace>hummingbird2</robotNamespace>
+        <poseTopic>odometry_sensor1/pose</poseTopic>
+        <poseWithCovarianceTopic>odometry_sensor1/pose_with_covariance</poseWithCovarianceTopic>
+        <positionTopic>odometry_sensor1/position</positionTopic>
+        <transformTopic>odometry_sensor1/transform</transformTopic>
+        <odometryTopic>odometry_sensor1/odometry</odometryTopic>
+        <parentFrameId>world</parentFrameId>
+        <childFrameId>hummingbird2/odometry_sensor1</childFrameId>
+        <measurementDivisor>1</measurementDivisor>
+        <measurementDelay>0</measurementDelay>
+        <unknownDelay>0.0</unknownDelay>
+        <noiseNormalPosition>0 0 0</noiseNormalPosition>
+        <noiseNormalQuaternion>0 0 0</noiseNormalQuaternion>
+        <noiseNormalLinearVelocity>0 0 0</noiseNormalLinearVelocity>
+        <noiseNormalAngularVelocity>0 0 0</noiseNormalAngularVelocity>
+        <noiseUniformPosition>0 0 0</noiseUniformPosition>
+        <noiseUniformQuaternion>0 0 0</noiseUniformQuaternion>
+        <noiseUniformLinearVelocity>0 0 0</noiseUniformLinearVelocity>
+        <noiseUniformAngularVelocity>0 0 0</noiseUniformAngularVelocity>
+      </plugin>
+      <pose frame=''>0 10 0.1 0 -0 0</pose>
+    </model>
+    <model name='hummingbird3'>
+      <link name='hummingbird3/base_link'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.68</mass>
+          <inertia>
+            <ixx>0.007</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.007</iyy>
+            <iyz>0</iyz>
+            <izz>0.012</izz>
+          </inertia>
+        </inertial>
+        <collision name='hummingbird3/base_link_inertia_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.1 0.1 0.12</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='hummingbird3/base_link_inertia_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/iot/catkin_ws_neptune/src/rotors_simulator/rotors_description/meshes/hummingbird.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <link name='hummingbird3/imu_link'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.015</mass>
+          <inertia>
+            <ixx>1e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1e-05</iyy>
+            <iyz>0</iyz>
+            <izz>1e-05</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird3/imu_joint' type='revolute'>
+        <child>hummingbird3/imu_link</child>
+        <parent>hummingbird3/base_link</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>0</upper>
+            <effort>0</effort>
+            <velocity>0</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird3/imugt_link'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>1e-05</mass>
+          <inertia>
+            <ixx>1e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1e-05</iyy>
+            <iyz>0</iyz>
+            <izz>1e-05</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird3/imugt_joint' type='revolute'>
+        <child>hummingbird3/imugt_link</child>
+        <parent>hummingbird3/base_link</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>0</upper>
+            <effort>0</effort>
+            <velocity>0</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird3/odometry_sensor1_link'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>1e-05</mass>
+          <inertia>
+            <ixx>1e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1e-05</iyy>
+            <iyz>0</iyz>
+            <izz>1e-05</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird3/odometry_sensor1_joint' type='revolute'>
+        <child>hummingbird3/odometry_sensor1_link</child>
+        <parent>hummingbird3/base_link</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>0</upper>
+            <effort>0</effort>
+            <velocity>0</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird3/odometry_sensorgt_link'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>1e-05</mass>
+          <inertia>
+            <ixx>1e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1e-05</iyy>
+            <iyz>0</iyz>
+            <izz>1e-05</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird3/odometry_sensorgt_joint' type='revolute'>
+        <child>hummingbird3/odometry_sensorgt_link</child>
+        <parent>hummingbird3/base_link</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>0</upper>
+            <effort>0</effort>
+            <velocity>0</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird3/rotor_0'>
+        <pose frame=''>0.17 0 0.01 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.009</mass>
+          <inertia>
+            <ixx>1.755e-06</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>7.50675e-05</iyy>
+            <iyz>0</iyz>
+            <izz>7.66875e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='hummingbird3/rotor_0_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.005</length>
+              <radius>0.1</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='hummingbird3/rotor_0_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/home/iot/catkin_ws_neptune/src/rotors_simulator/rotors_description/meshes/propeller_cw.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Red</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird3/rotor_0_joint' type='revolute'>
+        <child>hummingbird3/rotor_0</child>
+        <parent>hummingbird3/base_link</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird3/rotor_1'>
+        <pose frame=''>0 0.17 0.01 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.009</mass>
+          <inertia>
+            <ixx>1.755e-06</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>7.50675e-05</iyy>
+            <iyz>0</iyz>
+            <izz>7.66875e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='hummingbird3/rotor_1_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.005</length>
+              <radius>0.1</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='hummingbird3/rotor_1_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/home/iot/catkin_ws_neptune/src/rotors_simulator/rotors_description/meshes/propeller_ccw.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Blue</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird3/rotor_1_joint' type='revolute'>
+        <child>hummingbird3/rotor_1</child>
+        <parent>hummingbird3/base_link</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird3/rotor_2'>
+        <pose frame=''>-0.17 0 0.01 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.009</mass>
+          <inertia>
+            <ixx>1.755e-06</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>7.50675e-05</iyy>
+            <iyz>0</iyz>
+            <izz>7.66875e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='hummingbird3/rotor_2_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.005</length>
+              <radius>0.1</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='hummingbird3/rotor_2_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/home/iot/catkin_ws_neptune/src/rotors_simulator/rotors_description/meshes/propeller_cw.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Blue</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird3/rotor_2_joint' type='revolute'>
+        <child>hummingbird3/rotor_2</child>
+        <parent>hummingbird3/base_link</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='hummingbird3/rotor_3'>
+        <pose frame=''>0 -0.17 0.01 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.009</mass>
+          <inertia>
+            <ixx>1.755e-06</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>7.50675e-05</iyy>
+            <iyz>0</iyz>
+            <izz>7.66875e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='hummingbird3/rotor_3_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.005</length>
+              <radius>0.1</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='hummingbird3/rotor_3_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/home/iot/catkin_ws_neptune/src/rotors_simulator/rotors_description/meshes/propeller_ccw.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Blue</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='hummingbird3/rotor_3_joint' type='revolute'>
+        <child>hummingbird3/rotor_3</child>
+        <parent>hummingbird3/base_link</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <plugin name='multirotor_base_plugin' filename='librotors_gazebo_multirotor_base_plugin.so'>
+        <robotNamespace>hummingbird3</robotNamespace>
+        <linkName>hummingbird3/base_link</linkName>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      </plugin>
+      <plugin name='hummingbird3_front_motor_model' filename='librotors_gazebo_motor_model.so'>
+        <robotNamespace>hummingbird3</robotNamespace>
+        <jointName>hummingbird3/rotor_0_joint</jointName>
+        <linkName>hummingbird3/rotor_0</linkName>
+        <turningDirection>cw</turningDirection>
+        <timeConstantUp>0.0125</timeConstantUp>
+        <timeConstantDown>0.025</timeConstantDown>
+        <maxRotVelocity>838</maxRotVelocity>
+        <motorConstant>8.54858e-06</motorConstant>
+        <momentConstant>0.016</momentConstant>
+        <commandSubTopic>gazebo/command/motor_speed</commandSubTopic>
+        <motorNumber>0</motorNumber>
+        <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+        <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+        <motorSpeedPubTopic>motor_speed/0</motorSpeedPubTopic>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      </plugin>
+      <plugin name='hummingbird3_left_motor_model' filename='librotors_gazebo_motor_model.so'>
+        <robotNamespace>hummingbird3</robotNamespace>
+        <jointName>hummingbird3/rotor_1_joint</jointName>
+        <linkName>hummingbird3/rotor_1</linkName>
+        <turningDirection>ccw</turningDirection>
+        <timeConstantUp>0.0125</timeConstantUp>
+        <timeConstantDown>0.025</timeConstantDown>
+        <maxRotVelocity>838</maxRotVelocity>
+        <motorConstant>8.54858e-06</motorConstant>
+        <momentConstant>0.016</momentConstant>
+        <commandSubTopic>gazebo/command/motor_speed</commandSubTopic>
+        <motorNumber>1</motorNumber>
+        <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+        <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+        <motorSpeedPubTopic>motor_speed/1</motorSpeedPubTopic>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      </plugin>
+      <plugin name='hummingbird3_back_motor_model' filename='librotors_gazebo_motor_model.so'>
+        <robotNamespace>hummingbird3</robotNamespace>
+        <jointName>hummingbird3/rotor_2_joint</jointName>
+        <linkName>hummingbird3/rotor_2</linkName>
+        <turningDirection>cw</turningDirection>
+        <timeConstantUp>0.0125</timeConstantUp>
+        <timeConstantDown>0.025</timeConstantDown>
+        <maxRotVelocity>838</maxRotVelocity>
+        <motorConstant>8.54858e-06</motorConstant>
+        <momentConstant>0.016</momentConstant>
+        <commandSubTopic>gazebo/command/motor_speed</commandSubTopic>
+        <motorNumber>2</motorNumber>
+        <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+        <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+        <motorSpeedPubTopic>motor_speed/2</motorSpeedPubTopic>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      </plugin>
+      <plugin name='hummingbird3_right_motor_model' filename='librotors_gazebo_motor_model.so'>
+        <robotNamespace>hummingbird3</robotNamespace>
+        <jointName>hummingbird3/rotor_3_joint</jointName>
+        <linkName>hummingbird3/rotor_3</linkName>
+        <turningDirection>ccw</turningDirection>
+        <timeConstantUp>0.0125</timeConstantUp>
+        <timeConstantDown>0.025</timeConstantDown>
+        <maxRotVelocity>838</maxRotVelocity>
+        <motorConstant>8.54858e-06</motorConstant>
+        <momentConstant>0.016</momentConstant>
+        <commandSubTopic>gazebo/command/motor_speed</commandSubTopic>
+        <motorNumber>3</motorNumber>
+        <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+        <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+        <motorSpeedPubTopic>motor_speed/3</motorSpeedPubTopic>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      </plugin>
+      <plugin name='controller_interface' filename='librotors_gazebo_controller_interface.so'>
+        <robotNamespace>hummingbird3</robotNamespace>
+        <commandAttitudeThrustSubTopic>command/attitude</commandAttitudeThrustSubTopic>
+        <commandRateThrustSubTopic>command/rate</commandRateThrustSubTopic>
+        <commandMotorSpeedSubTopic>command/motor_speed</commandMotorSpeedSubTopic>
+        <imuSubTopic>imu</imuSubTopic>
+        <motorSpeedCommandPubTopic>gazebo/command/motor_speed</motorSpeedCommandPubTopic>
+      </plugin>
+      <plugin name='rotors_gazebo_imu_plugin' filename='librotors_gazebo_imu_plugin.so'>
+        <robotNamespace>hummingbird3</robotNamespace>
+        <linkName>hummingbird3/imu_link</linkName>
+        <imuTopic>imu</imuTopic>
+        <gyroscopeNoiseDensity>0.0003394</gyroscopeNoiseDensity>
+        <gyroscopeRandomWalk>3.8785e-05</gyroscopeRandomWalk>
+        <gyroscopeBiasCorrelationTime>1000.0</gyroscopeBiasCorrelationTime>
+        <gyroscopeTurnOnBiasSigma>0.0087</gyroscopeTurnOnBiasSigma>
+        <accelerometerNoiseDensity>0.004</accelerometerNoiseDensity>
+        <accelerometerRandomWalk>0.006</accelerometerRandomWalk>
+        <accelerometerBiasCorrelationTime>300.0</accelerometerBiasCorrelationTime>
+        <accelerometerTurnOnBiasSigma>0.196</accelerometerTurnOnBiasSigma>
+      </plugin>
+      <plugin name='rotors_gazebo_imugt_plugin' filename='librotors_gazebo_imu_plugin.so'>
+        <robotNamespace>hummingbird3</robotNamespace>
+        <linkName>hummingbird3/imugt_link</linkName>
+        <imuTopic>ground_truth/imu</imuTopic>
+        <gyroscopeNoiseDensity>0.0</gyroscopeNoiseDensity>
+        <gyroscopeRandomWalk>0.0</gyroscopeRandomWalk>
+        <gyroscopeBiasCorrelationTime>1000.0</gyroscopeBiasCorrelationTime>
+        <gyroscopeTurnOnBiasSigma>0.0</gyroscopeTurnOnBiasSigma>
+        <accelerometerNoiseDensity>0.0</accelerometerNoiseDensity>
+        <accelerometerRandomWalk>0.0</accelerometerRandomWalk>
+        <accelerometerBiasCorrelationTime>300.0</accelerometerBiasCorrelationTime>
+        <accelerometerTurnOnBiasSigma>0.0</accelerometerTurnOnBiasSigma>
+      </plugin>
+      <plugin name='odometry_sensorgt' filename='librotors_gazebo_odometry_plugin.so'>
+        <linkName>hummingbird3/odometry_sensorgt_link</linkName>
+        <robotNamespace>hummingbird3</robotNamespace>
+        <poseTopic>ground_truth/pose</poseTopic>
+        <poseWithCovarianceTopic>ground_truth/pose_with_covariance</poseWithCovarianceTopic>
+        <positionTopic>ground_truth/position</positionTopic>
+        <transformTopic>ground_truth/transform</transformTopic>
+        <odometryTopic>ground_truth/odometry</odometryTopic>
+        <parentFrameId>world</parentFrameId>
+        <childFrameId>hummingbird3/base_link</childFrameId>
+        <measurementDivisor>1</measurementDivisor>
+        <measurementDelay>0</measurementDelay>
+        <unknownDelay>0.0</unknownDelay>
+        <noiseNormalPosition>0 0 0</noiseNormalPosition>
+        <noiseNormalQuaternion>0 0 0</noiseNormalQuaternion>
+        <noiseNormalLinearVelocity>0 0 0</noiseNormalLinearVelocity>
+        <noiseNormalAngularVelocity>0 0 0</noiseNormalAngularVelocity>
+        <noiseUniformPosition>0 0 0</noiseUniformPosition>
+        <noiseUniformQuaternion>0 0 0</noiseUniformQuaternion>
+        <noiseUniformLinearVelocity>0 0 0</noiseUniformLinearVelocity>
+        <noiseUniformAngularVelocity>0 0 0</noiseUniformAngularVelocity>
+      </plugin>
+      <static>0</static>
+      <plugin name='odometry_sensor1' filename='librotors_gazebo_odometry_plugin.so'>
+        <linkName>hummingbird3/odometry_sensor1_link</linkName>
+        <robotNamespace>hummingbird3</robotNamespace>
+        <poseTopic>odometry_sensor1/pose</poseTopic>
+        <poseWithCovarianceTopic>odometry_sensor1/pose_with_covariance</poseWithCovarianceTopic>
+        <positionTopic>odometry_sensor1/position</positionTopic>
+        <transformTopic>odometry_sensor1/transform</transformTopic>
+        <odometryTopic>odometry_sensor1/odometry</odometryTopic>
+        <parentFrameId>world</parentFrameId>
+        <childFrameId>hummingbird3/odometry_sensor1</childFrameId>
+        <measurementDivisor>1</measurementDivisor>
+        <measurementDelay>0</measurementDelay>
+        <unknownDelay>0.0</unknownDelay>
+        <noiseNormalPosition>0 0 0</noiseNormalPosition>
+        <noiseNormalQuaternion>0 0 0</noiseNormalQuaternion>
+        <noiseNormalLinearVelocity>0 0 0</noiseNormalLinearVelocity>
+        <noiseNormalAngularVelocity>0 0 0</noiseNormalAngularVelocity>
+        <noiseUniformPosition>0 0 0</noiseUniformPosition>
+        <noiseUniformQuaternion>0 0 0</noiseUniformQuaternion>
+        <noiseUniformLinearVelocity>0 0 0</noiseUniformLinearVelocity>
+        <noiseUniformAngularVelocity>0 0 0</noiseUniformAngularVelocity>
+      </plugin>
+      <pose frame=''>0 -33 0.1 0 -0 0</pose>
+    </model>
+    <state world_name='default'>
+      <sim_time>68 500000000</sim_time>
+      <real_time>69 295336414</real_time>
+      <wall_time>1627274957 247850330</wall_time>
+      <iterations>6850</iterations>
+      <model name='ground_plane'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='hummingbird1'>
+        <pose frame=''>-0 0 0.06 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='hummingbird1/base_link'>
+          <pose frame=''>-0 0 0.06 0 -0 0</pose>
+          <velocity>-0 0 0 0 -0 0</velocity>
+          <acceleration>-0 0 0 -0 -0 -0</acceleration>
+          <wrench>-0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird1/imu_link'>
+          <pose frame=''>-0 0 0.06 -0 -0 -0</pose>
+          <velocity>-0 0 0 0 -0 0</velocity>
+          <acceleration>-0 0 0 0 -0 0</acceleration>
+          <wrench>-0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird1/imugt_link'>
+          <pose frame=''>-0 0 0.06 -0 -0 -0</pose>
+          <velocity>-0 0 0 0 -0 0</velocity>
+          <acceleration>-0 0 0 0 -0 0</acceleration>
+          <wrench>-0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird1/odometry_sensor1_link'>
+          <pose frame=''>-0 0 0.06 -0 -0 -0</pose>
+          <velocity>-0 0 0 0 -0 0</velocity>
+          <acceleration>-0 0 0 0 -0 0</acceleration>
+          <wrench>-0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird1/odometry_sensorgt_link'>
+          <pose frame=''>-0 0 0.06 -0 -0 -0</pose>
+          <velocity>-0 0 0 0 -0 0</velocity>
+          <acceleration>-0 0 0 0 -0 0</acceleration>
+          <wrench>-0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird1/rotor_0'>
+          <pose frame=''>0.17 0 0.07 0 -0 0</pose>
+          <velocity>-0 0 0 0 -0 0</velocity>
+          <acceleration>-0 0 0 -0 -0 -0</acceleration>
+          <wrench>-0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird1/rotor_1'>
+          <pose frame=''>-0 0.17 0.07 0 -0 0</pose>
+          <velocity>-0 0 0 0 -0 0</velocity>
+          <acceleration>-0 0 0 -0 -0 -0</acceleration>
+          <wrench>-0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird1/rotor_2'>
+          <pose frame=''>-0.17 0 0.07 0 -0 0</pose>
+          <velocity>-0 0 0 0 -0 0</velocity>
+          <acceleration>-0 0 0 -0 -0 -0</acceleration>
+          <wrench>-0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird1/rotor_3'>
+          <pose frame=''>-0 -0.17 0.07 0 -0 0</pose>
+          <velocity>-0 0 0 0 -0 0</velocity>
+          <acceleration>-0 0 0 -0 -0 -0</acceleration>
+          <wrench>-0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='hummingbird2'>
+        <pose frame=''>0 10 0.06 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='hummingbird2/base_link'>
+          <pose frame=''>0 10 0.06 0 -0 0</pose>
+          <velocity>0 -0 0 0 -0 0</velocity>
+          <acceleration>0 -0 0 0 -0 0</acceleration>
+          <wrench>0 -0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird2/imu_link'>
+          <pose frame=''>0 10 0.06 0 -0 0</pose>
+          <velocity>0 -0 0 0 -0 0</velocity>
+          <acceleration>0 -0 0 0 -0 0</acceleration>
+          <wrench>0 -0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird2/imugt_link'>
+          <pose frame=''>0 10 0.06 0 -0 0</pose>
+          <velocity>0 -0 0 0 -0 0</velocity>
+          <acceleration>0 -0 0 0 -0 0</acceleration>
+          <wrench>0 -0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird2/odometry_sensor1_link'>
+          <pose frame=''>0 10 0.06 0 -0 0</pose>
+          <velocity>0 -0 0 0 -0 0</velocity>
+          <acceleration>0 -0 0 0 -0 0</acceleration>
+          <wrench>0 -0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird2/odometry_sensorgt_link'>
+          <pose frame=''>0 10 0.06 0 -0 0</pose>
+          <velocity>0 -0 0 0 -0 0</velocity>
+          <acceleration>0 -0 0 0 -0 0</acceleration>
+          <wrench>0 -0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird2/rotor_0'>
+          <pose frame=''>0.17 10 0.07 0 -0 0</pose>
+          <velocity>0 -0 0 0 -0 0</velocity>
+          <acceleration>0 -0 0 0 -0 0</acceleration>
+          <wrench>0 -0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird2/rotor_1'>
+          <pose frame=''>0 10.17 0.07 0 -0 0</pose>
+          <velocity>0 -0 0 0 -0 0</velocity>
+          <acceleration>0 -0 0 0 -0 0</acceleration>
+          <wrench>0 -0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird2/rotor_2'>
+          <pose frame=''>-0.17 10 0.07 0 -0 0</pose>
+          <velocity>0 -0 0 0 -0 0</velocity>
+          <acceleration>0 -0 0 0 -0 0</acceleration>
+          <wrench>0 -0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird2/rotor_3'>
+          <pose frame=''>0 9.83 0.07 0 -0 0</pose>
+          <velocity>0 -0 0 0 -0 0</velocity>
+          <acceleration>0 -0 0 0 -0 0</acceleration>
+          <wrench>0 -0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='hummingbird3'>
+        <pose frame=''>-0 -33 0.06 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='hummingbird3/base_link'>
+          <pose frame=''>-0 -33 0.06 0 -0 0</pose>
+          <velocity>-0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 -0 0 -0 0</acceleration>
+          <wrench>0 0 -0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird3/imu_link'>
+          <pose frame=''>-0 -33 0.06 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird3/imugt_link'>
+          <pose frame=''>-0 -33 0.06 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird3/odometry_sensor1_link'>
+          <pose frame=''>-0 -33 0.06 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird3/odometry_sensorgt_link'>
+          <pose frame=''>-0 -33 0.06 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird3/rotor_0'>
+          <pose frame=''>0.17 -33 0.07 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird3/rotor_1'>
+          <pose frame=''>-0 -32.83 0.07 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 -0 0 -0 0</acceleration>
+          <wrench>0 0 -0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird3/rotor_2'>
+          <pose frame=''>-0.17 -33 0.07 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='hummingbird3/rotor_3'>
+          <pose frame=''>-0 -33.17 0.07 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 -0 0 -0 0</acceleration>
+          <wrench>0 0 -0 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose frame=''>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose frame=''>6.01466 -6.27059 6.39322 -0 0.595643 2.3522</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+  </world>
+</sdf>

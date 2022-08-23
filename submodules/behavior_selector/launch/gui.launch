@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <!-- start GUI -->
+  <node pkg="rqt_gui" type="rqt_gui" name="rqt_gui" args="--perspective-file $(find behavior_selector)/cfg/default.perspective"/>
+
+  <!-- Service server for GUI, publishes globalflightmode -->
+  <node pkg="behavior_selector" type="behavior_selector_node.py" name="behavior_selector" output="screen" />
+
+</launch>
