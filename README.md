@@ -1,9 +1,23 @@
 # NEPTUNE: Non-Entangling Trajectory Planning for Multiple Tethered Unmanned Vehicles #
+### **Accepted for publication in the IEEE Transactions on Robotics (T-RO)**
 
-A trajectory planning framework for multiple tethered robots. It also works for multiple untethered robots, with a simple change of a parameter (set enable_entangle_check to False).
-### ****
+A trajectory planning framework for multiple tethered robots. It also works for multiple untethered robots, with a simple change of a parameter (set `enable_entangle_check` to False).
+### 
 
 
+## Citation
+
+If you find this package useful, please cite [NEPTUNE: Non-Entangling Planning for Multiple Tethered Unmanned Vehicles](https://arxiv.org/abs/2212.01536) ([pdf](https://arxiv.org/abs/2212.01536), [video](https://youtu.be/8b1RlDvQsi0)):
+
+```bibtex
+@article{cao2023neptune,
+  title={NEPTUNE: Non-Entangling Planning for Multiple Tethered Unmanned Vehicles},
+  author={Cao, Muqing and Cao, Kun and Yuan, Shenghai and Nguyen, Thien-Minh and Xie, Lihua},
+  journal={IEEE Transactions on Robotics},
+  year={2023},
+  publisher={IEEE}
+}
+```
 
 ## General Setup
 
@@ -113,9 +127,6 @@ killall xterm
 
 We are looking into a bug that will cause the planning node to crash occasionally.
 
-## Related Paper
-
-Cao, Muqing, Kun Cao, Shenghai Yuan, Thien-Minh Nguyen, and Lihua Xie. "[NEPTUNE: Non-Entangling Planning for Multiple Tethered Unmanned Vehicles.](https://arxiv.org/abs/2212.01536)" arXiv preprint arXiv:2212.01536 (2022).
 
 ## Credits:
 This package uses some existing functions and unilities from [MADER](https://github.com/mit-acl/mader), such as trajectory messages, cgal unilities and parameter class.
