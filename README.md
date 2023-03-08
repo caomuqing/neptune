@@ -3,7 +3,7 @@
 
 A trajectory planning framework for multiple tethered robots. It also works for multiple untethered robots, with a simple change of a parameter (set `enable_entangle_check` to False).
 ### 
-
+![NEPTUNE: Non-Entangling Trajectory Planning for Multiple Tethered Unmanned Vehicles](./neptune/imgs/multi_obst.gif)
 
 ## Citation
 
