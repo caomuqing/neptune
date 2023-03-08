@@ -1,5 +1,5 @@
 # NEPTUNE: Non-Entangling Trajectory Planning for Multiple Tethered Unmanned Vehicles #
-### **Accepted for publication in the IEEE Transactions on Robotics (T-RO)**
+### **Accepted for publication in IEEE Transactions on Robotics (T-RO)**
 
 A trajectory planning framework for multiple tethered robots. It also works for multiple untethered robots, with a simple change of a parameter (set `enable_entangle_check` to False).
 ### 
