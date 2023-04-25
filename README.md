@@ -10,13 +10,15 @@ A trajectory planning framework for multiple tethered robots. It also works for 
 If you find this package useful, please cite [NEPTUNE: Non-Entangling Planning for Multiple Tethered Unmanned Vehicles](https://arxiv.org/abs/2212.01536) ([pdf](https://arxiv.org/abs/2212.01536), [video](https://youtu.be/8b1RlDvQsi0)):
 
 ```bibtex
-@article{cao2023neptune,
-  title={NEPTUNE: Non-Entangling Planning for Multiple Tethered Unmanned Vehicles},
+@ARTICLE{cao2023neptune,
   author={Cao, Muqing and Cao, Kun and Yuan, Shenghai and Nguyen, Thien-Minh and Xie, Lihua},
-  journal={IEEE Transactions on Robotics},
+  journal={IEEE Transactions on Robotics}, 
+  title={NEPTUNE: Nonentangling Trajectory Planning for Multiple Tethered Unmanned Vehicles}, 
   year={2023},
-  publisher={IEEE}
-}
+  volume={},
+  number={},
+  pages={1-19},
+  doi={10.1109/TRO.2023.3264950}}
 ```
 
 ## General Setup
