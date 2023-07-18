@@ -85,7 +85,7 @@ target_link_libraries(kinodynamic_search PUBLIC ${catkin_LIBRARIES} gjk)
 
 
 add_executable(neptune_test_node src/node.cpp src/neptune_ros.cpp src/neptune.cpp src/Astar_searcher.cpp 
-			   src/solveMultiLinearPath.cpp src/ddp_optimizer.cpp src/bezier_base.cpp)
+			   src/solveMultiLinearPath.cpp src/bezier_base.cpp)
 target_link_libraries(neptune_test_node PUBLIC ${catkin_LIBRARIES} kinodynamic_search poly_solver utils gjk)  #${CGAL_LIBS}
 add_dependencies(neptune_test_node ${catkin_EXPORTED_TARGETS} )
 

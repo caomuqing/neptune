@@ -17,7 +17,7 @@
 #include "termcolor.hpp"
 
 # include "gjk.hpp"
-#include <ddp_optimizer.h>
+// #include <ddp_optimizer.h>
 
 using namespace termcolor;
 
@@ -1527,115 +1527,115 @@ bool Neptune::replanFull(std::vector<mt::state>& X_safe_out, mt::PieceWisePol& p
     backEndOptimizer_->generatePwpOut(pwp_now, traj_out, t_start, par_.dc);
     opt_compute_time_ = opt_time.ElapsedMs();    
   }
-  else //TODO: make these codes under the ddp_optimizer class
+  else //TODO: ddp_optimizer is commented due to a reported error related to eigen
   {
-    decomp_cvx_space::FlightCorridor corridor;
-    int num_pol_init = pwp_init.coeff_x.size();
-    for (int i=0; i<pwp_init.coeff_x.size(); i++)
-    {
-      corridor.appendTime(par_.T_span);
-      decomp_cvx_space::Polytope empty_pltp;
-      corridor.appendPolytope(empty_pltp);
-    }
+    // decomp_cvx_space::FlightCorridor corridor;
+    // int num_pol_init = pwp_init.coeff_x.size();
+    // for (int i=0; i<pwp_init.coeff_x.size(); i++)
+    // {
+    //   corridor.appendTime(par_.T_span);
+    //   decomp_cvx_space::Polytope empty_pltp;
+    //   corridor.appendPolytope(empty_pltp);
+    // }
 
-    double tspan4 = std::pow(par_.T_span, 4);
-    double tspan3 = std::pow(par_.T_span, 3);
-    double tspan2 = std::pow(par_.T_span, 2);
+    // double tspan4 = std::pow(par_.T_span, 4);
+    // double tspan3 = std::pow(par_.T_span, 3);
+    // double tspan2 = std::pow(par_.T_span, 2);
 
-    Eigen::Matrix<double, 4, 4> Q_p_term;
-    Eigen::Vector4d q_p_term;    
-    Q_p_term << tspan3*tspan3, tspan3*tspan2, tspan4, tspan3,
-               tspan3*tspan2, tspan4, tspan3, tspan2,
-               tspan4, tspan3, tspan2, par_.T_span,
-               tspan3, tspan2, par_.T_span, 1;   
-    q_p_term << tspan3, tspan2, par_.T_span, 1; 
+    // Eigen::Matrix<double, 4, 4> Q_p_term;
+    // Eigen::Vector4d q_p_term;    
+    // Q_p_term << tspan3*tspan3, tspan3*tspan2, tspan4, tspan3,
+    //            tspan3*tspan2, tspan4, tspan3, tspan2,
+    //            tspan4, tspan3, tspan2, par_.T_span,
+    //            tspan3, tspan2, par_.T_span, 1;   
+    // q_p_term << tspan3, tspan2, par_.T_span, 1; 
 
-    MatrixXd pos = MatrixXd::Zero(2,3);
-    MatrixXd vel = MatrixXd::Zero(2,3);
-    MatrixXd acc = MatrixXd::Zero(2,3);
-    MatrixXd jer = MatrixXd::Zero(2,3);
+    // MatrixXd pos = MatrixXd::Zero(2,3);
+    // MatrixXd vel = MatrixXd::Zero(2,3);
+    // MatrixXd acc = MatrixXd::Zero(2,3);
+    // MatrixXd jer = MatrixXd::Zero(2,3);
 
-    pos.row(0) = A.pos.transpose();
-    pos(1,0) = q_p_term.transpose() * pwp_init.coeff_x[num_pol_init-1];
-    pos(1,1) = q_p_term.transpose() * pwp_init.coeff_y[num_pol_init-1];
-    pos(1,2) = q_p_term.transpose() * pwp_init.coeff_z[num_pol_init-1];
+    // pos.row(0) = A.pos.transpose();
+    // pos(1,0) = q_p_term.transpose() * pwp_init.coeff_x[num_pol_init-1];
+    // pos(1,1) = q_p_term.transpose() * pwp_init.coeff_y[num_pol_init-1];
+    // pos(1,2) = q_p_term.transpose() * pwp_init.coeff_z[num_pol_init-1];
 
-    vel.row(0) = A.vel.transpose();
-    acc.row(0) = A.accel.transpose();
+    // vel.row(0) = A.vel.transpose();
+    // acc.row(0) = A.accel.transpose();
 
-    Eigen::DiagonalMatrix<double, 4> C_interval_convert;
-    C_interval_convert.diagonal() << tspan3, tspan2, par_.T_span, 1.0;
+    // Eigen::DiagonalMatrix<double, 4> C_interval_convert;
+    // C_interval_convert.diagonal() << tspan3, tspan2, par_.T_span, 1.0;
 
-    std::vector<Eigen::Matrix<double, 2, 4>> ctrlPtsInit_;
-    for (int i=0; i<num_pol_init; i++)
-    {
-      Eigen::Matrix<double, 2, 4> P;
-      Eigen::Matrix<double, 2, 4> Q;
+    // std::vector<Eigen::Matrix<double, 2, 4>> ctrlPtsInit_;
+    // for (int i=0; i<num_pol_init; i++)
+    // {
+    //   Eigen::Matrix<double, 2, 4> P;
+    //   Eigen::Matrix<double, 2, 4> Q;
 
-      P.row(0)= pwp_init.coeff_x[i];
-      P.row(1)= pwp_init.coeff_y[i];
+    //   P.row(0)= pwp_init.coeff_x[i];
+    //   P.row(1)= pwp_init.coeff_y[i];
 
-      Q = P * C_interval_convert* A_rest_pos_basis_inverse_; //get position control points
+    //   Q = P * C_interval_convert* A_rest_pos_basis_inverse_; //get position control points
 
-      ctrlPtsInit_.push_back(Q);
-    }
-    for (int i=0; i<num_pol_init; i++)
-    {
-      for (int j=0; j<inflatedStaticObs_.size(); j++)
-      {
-        bool close_to_static_obs = false;
-        double dist = (ctrlPtsInit_[i].col(0) - inflatedStaticObs_[j].col(0)).norm();
-        //subtract edges of convex hull to estimate if they are close
-        for (int k=0; k<3; k++)
-        {
-          dist -= (ctrlPtsInit_[i].col(k+1) - ctrlPtsInit_[i].col(k)).norm();
-          if (dist < 0)
-          {
-            close_to_static_obs = true;
-            break;
-          }
-        }
-        for (int k=0; k<inflatedStaticObs_[j].cols()-1; k++)
-        {
-          dist -= (inflatedStaticObs_[j].col(k+1) - inflatedStaticObs_[j].col(k)).norm();
-          if (dist < 0)
-          {
-            close_to_static_obs = true;
-            break;
-          }          
-        }
-        if (close_to_static_obs)
-        {
-          Eigen::Vector3d sp_line;
-          bool solved = separator_solver_->solveModel(sp_line, inflatedStaticObs_[j], ctrlPtsInit_[i]);  
-          if (solved)
-          {
-            corridor.polyhedrons[i].appendPlane(Eigen::Vector4d(sp_line(0), sp_line(1), 
-                                                                0.0, sp_line(2) -1));
-          }            
-        }      
-      }      
-    }
+    //   ctrlPtsInit_.push_back(Q);
+    // }
+    // for (int i=0; i<num_pol_init; i++)
+    // {
+    //   for (int j=0; j<inflatedStaticObs_.size(); j++)
+    //   {
+    //     bool close_to_static_obs = false;
+    //     double dist = (ctrlPtsInit_[i].col(0) - inflatedStaticObs_[j].col(0)).norm();
+    //     //subtract edges of convex hull to estimate if they are close
+    //     for (int k=0; k<3; k++)
+    //     {
+    //       dist -= (ctrlPtsInit_[i].col(k+1) - ctrlPtsInit_[i].col(k)).norm();
+    //       if (dist < 0)
+    //       {
+    //         close_to_static_obs = true;
+    //         break;
+    //       }
+    //     }
+    //     for (int k=0; k<inflatedStaticObs_[j].cols()-1; k++)
+    //     {
+    //       dist -= (inflatedStaticObs_[j].col(k+1) - inflatedStaticObs_[j].col(k)).norm();
+    //       if (dist < 0)
+    //       {
+    //         close_to_static_obs = true;
+    //         break;
+    //       }          
+    //     }
+    //     if (close_to_static_obs)
+    //     {
+    //       Eigen::Vector3d sp_line;
+    //       bool solved = separator_solver_->solveModel(sp_line, inflatedStaticObs_[j], ctrlPtsInit_[i]);  
+    //       if (solved)
+    //       {
+    //         corridor.polyhedrons[i].appendPlane(Eigen::Vector4d(sp_line(0), sp_line(1), 
+    //                                                             0.0, sp_line(2) -1));
+    //       }            
+    //     }      
+    //   }      
+    // }
 
-    ddpTrajOptimizer * ddp_optimizer = new ddpTrajOptimizer();
-    double w_snap = 1.0e0;
-    double w_terminal = 1.0e2;
-    double w_time = 1.0e2;
-    int iter_max = 100;
-    bool infeas = false;
-    bool line_failed = true;
-    int time_power = 2;
-    bool minvo_flag = true;
-    int rtn = ddp_optimizer->polyCurveGeneration(
-                corridor, pos, vel, acc, jer, 
-                par_.v_max(0), par_.a_max(0), par_.j_max*1.3, pwp_init, w_snap, w_terminal, 
-                w_time, iter_max, infeas, false, false, line_failed, time_power, minvo_flag); 
-    ddp_optimizer->generatePwpOut(pwp_now, traj_out, t_start, par_.dc);
-    Eigen::VectorXd polytime = ddp_optimizer-> getPolyTime();
-    // std::cout << bold << green << "KINODY initial time is" << 
-    //                               num_pol_init*par_.T_span << std::endl;    
-    std::cout << bold << green << "DIRECT optimized time is" << polytime.sum() << 
-                              " vs "<<num_pol_init*par_.T_span <<std::endl;
+    // ddpTrajOptimizer * ddp_optimizer = new ddpTrajOptimizer();
+    // double w_snap = 1.0e0;
+    // double w_terminal = 1.0e2;
+    // double w_time = 1.0e2;
+    // int iter_max = 100;
+    // bool infeas = false;
+    // bool line_failed = true;
+    // int time_power = 2;
+    // bool minvo_flag = true;
+    // int rtn = ddp_optimizer->polyCurveGeneration(
+    //             corridor, pos, vel, acc, jer, 
+    //             par_.v_max(0), par_.a_max(0), par_.j_max*1.3, pwp_init, w_snap, w_terminal, 
+    //             w_time, iter_max, infeas, false, false, line_failed, time_power, minvo_flag); 
+    // ddp_optimizer->generatePwpOut(pwp_now, traj_out, t_start, par_.dc);
+    // Eigen::VectorXd polytime = ddp_optimizer-> getPolyTime();
+    // // std::cout << bold << green << "KINODY initial time is" << 
+    // //                               num_pol_init*par_.T_span << std::endl;    
+    // std::cout << bold << green << "DIRECT optimized time is" << polytime.sum() << 
+    //                           " vs "<<num_pol_init*par_.T_span <<std::endl;
   }
 
   mtx_trajs_.lock();
