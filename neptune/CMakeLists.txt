@@ -64,22 +64,22 @@ target_link_libraries(kinodynamic_search PUBLIC ${catkin_LIBRARIES} gjk)
 
 
 
-	find_package(GUROBI REQUIRED)
+find_package(GUROBI REQUIRED)
 
-	if(GUROBI_FOUND)
-	  message(STATUS "GUROBI FOUND")
-	else(GUROBI_FOUND)
-	  message(FATAL_ERROR "GUROBI NOT FOUND!")
-	endif(GUROBI_FOUND)
+if(GUROBI_FOUND)
+	message(STATUS "GUROBI FOUND")
+else(GUROBI_FOUND)
+	message(FATAL_ERROR "GUROBI NOT FOUND!")
+endif(GUROBI_FOUND)
 
-	include_directories(${GUROBI_INCLUDE_DIRS})
-	file(GLOB GurobiSOFiles $ENV{GUROBI_HOME}/lib/libgurobi*[0-9].so) #files that are start with libgurobi and end with number.so
-	set(GUROBI_LIBRARIES "$ENV{GUROBI_HOME}/lib/libgurobi_c++.a;${GurobiSOFiles};$ENV{GUROBI_HOME}/lib/" )
+include_directories(${GUROBI_INCLUDE_DIRS})
+file(GLOB GurobiSOFiles $ENV{GUROBI_HOME}/lib/libgurobi*[0-9].so) #files that are start with libgurobi and end with number.so
+set(GUROBI_LIBRARIES "$ENV{GUROBI_HOME}/lib/libgurobi_c++.a;${GurobiSOFiles};$ENV{GUROBI_HOME}/lib/" )
 
-	add_library(poly_solver STATIC src/solver_gurobi_poly.cpp)
-	target_compile_definitions(poly_solver PUBLIC USE_GUROBI_FLAG=1) 
-	target_include_directories (poly_solver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${DECOMP_UTIL_INCLUDE_DIRS})
-	target_link_libraries(poly_solver PUBLIC ${GUROBI_LIBRARIES} ${DECOMP_UTIL_LIBRARIES} utils ${catkin_LIBRARIES} cgal_utils)
+add_library(poly_solver STATIC src/solver_gurobi_poly.cpp)
+target_compile_definitions(poly_solver PUBLIC USE_GUROBI_FLAG=1) 
+target_include_directories (poly_solver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${DECOMP_UTIL_INCLUDE_DIRS})
+target_link_libraries(poly_solver PUBLIC ${GUROBI_LIBRARIES} ${DECOMP_UTIL_LIBRARIES} utils ${catkin_LIBRARIES} cgal_utils)
 
 
 

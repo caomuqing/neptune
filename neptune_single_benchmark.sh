@@ -14,7 +14,7 @@ xterm -e "source ~/.bashrc && source $path_to_ws/devel/setup.bash && roscore" & 
 xterm -e "source ~/.bashrc && source $path_to_ws/devel/setup.bash && rosrun rviz rviz -d $path_to_ws/src/neptune/neptune/rviz_cfgs/benchmark_single.rviz" & sleep 3
 
 
-xterm -e "source $path_to_ws/devel/setup.bash && roslaunch neptune many_drones_mq.launch action:=start" & sleep 3
+xterm -hold -e "source $path_to_ws/devel/setup.bash && roslaunch neptune many_drones_mq.launch action:=start" & sleep 3
 
 xterm -hold -e "source $path_to_ws/devel/setup.bash && roslaunch neptune neptune_single_benchmark.launch quad:=firefly1" & sleep 1
 
